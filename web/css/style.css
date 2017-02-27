@@ -1,0 +1,10 @@
+.layer1{
+    float: left;
+    margin-right: 20px;
+}
+#resTable > thead{
+    background: #CCC;
+}
+.rows:nth-child(even){
+    background: #CCC;
+}

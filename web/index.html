@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework1</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery-3.1.1.js"></script>
+    <script type="text/javascript" language="javascript">
+        $(document).ready(function () {
+            $("#calc").click(function () {
+                var a = $('#a').val();
+                var b = $('#b').val();
+                var c = $('#c').val();
+                if ($.isNumeric(a) && $.isNumeric(b) && $.isNumeric(c)) {
+                    if (a!= 0) {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/calcEqServlet',
+                            data: {
+                                a: $('#a').val(),
+                                b: $('#b').val(),
+                                c: $('#c').val()
+                            },
+                            success: function (data) {
+                                var result = data;
+                                $('#resTable > tbody').append("<tr class='rows'><td>" + a + "</td><td>" + b + "</td><td>" + c + "</td><td>" + result + "</td></tr>")
+                                $("#resTable > tbody > tr").on("click",function () {
+                                    $(this).remove();
+                                })
+                            }
+
+                        });
+                    } else {
+                        alert("Coefficient A doesn't have to be 0!");
+                    }
+                } else {
+                    alert("Not correct numbers! Try again!");
+                }
+            })
+        });
+
+
+    </script>
+</head>
+<body>
+<div class="layer1">
+<form id="ajaxForm" method="POST">
+    <legend>Введите коэффициенты:</legend>
+    <table border="2px" cellpadding="10px">
+        <tr>
+            <td>A</td>
+            <td><input type="text" id="a"/></td>
+        </tr>
+        <tr>
+            <td>B</td>
+            <td><input type="text" id="b"/></td>
+        </tr>
+        <tr>
+            <td>C</td>
+            <td><input type="text" id="c"/></td>
+        </tr>
+    </table>
+    <br>
+    <tr>
+        <td><input id="calc" type="button" value="Решить"></td>
+    </tr>
+</form>
+</div>
+<div>
+    <legend>Таблица результатов:</legend>
+<table id="resTable" border="2px" cellpadding="10px">
+    <thead>
+        <tr>
+            <td>A:</td>
+            <td>B:</td>
+            <td>C:</td>
+            <td>Results:</td>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+</div>
+</body>
+</html>
